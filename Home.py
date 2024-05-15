@@ -54,7 +54,7 @@ def load_model():
         Reshape((SPLIT_SIZE, SPLIT_SIZE, OUTPUT_DIM)),
     ])
     
-    model.load_weights('./model/yolo_efficientnet_b1_new.h5')
+    model.load_weights('./yolo_efficientnet_b1_new.h5')
     print(model.summary())
     return model
 
@@ -116,11 +116,16 @@ def model_test(img):
                 img,
                 (int(final_boxes[i][0]), int(final_boxes[i][1])),
                 (int(final_boxes[i][2]), int(final_boxes[i][3])), (0, 0, 255), 1)
+            
+            cv2.rectangle(
+                img,
+                (int(final_boxes[i][0]), int(final_boxes[i][1]) +20),
+                (int(final_boxes[i][0]) + 130, int(final_boxes[i][1])), (0, 0, 0), -1)
             cv2.putText(
                 img,
                 final_boxes[i][-1],
                 (int(final_boxes[i][0]), int(final_boxes[i][1]) + 15),
-                cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (200, 200, 2), 1
+                cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (255, 255, 255), 1
                 )
         return img
     except Exception as e:
